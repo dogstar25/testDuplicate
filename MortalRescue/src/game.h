@@ -68,6 +68,7 @@ private:
 
 	//Vector of all game objects
 	vector<GameObject> gameObjects;
+
 	PlayerObject* player;
 
 	//Game States
