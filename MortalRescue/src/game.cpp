@@ -67,7 +67,7 @@ bool Game::init()
 
 		//Create the main player object
 		unique_ptr<GameObject> playerObject =
-			Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
+			this->gameObjectManager.buildGameObject("GINA_64", 5, 5);
 		playerObject->direction = 0;
 		playerObject->strafe = 0;
 		playerObject->currentAnimationState = "IDLE";
@@ -173,14 +173,14 @@ void Game::update() {
 void Game::render() {
 
 	//Clear teh graphics display
-	Game::textureManager.clear();
+	textureManager.clear();
 
 	//render the player
-	Game::textureManager.render(this->player.get());
+	textureManager.render(this->player.get());
 	
 	//Render all of the game objects
 	for (auto & gameObject : gameObjects) {
-		Game::textureManager.render(gameObject.get());
+		textureManager.render(gameObject.get());
 	}
 
 	//DebugDraw
@@ -190,7 +190,7 @@ void Game::render() {
 	}
 
 	//Push all drawn things to the graphics display
-	Game::textureManager.present();
+	textureManager.present();
 
 }
 

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "game.h"
 #include "Settings.h"
 
 using namespace std;
@@ -14,10 +15,9 @@ void Settings::run()
 	//build settings window
 	this->state = RUN;
 	cout << "Settings\n";
-
 	while (this->state != EXITMENU)
 	{
-
+		
 		handleEvents();
 
 	}
