@@ -30,6 +30,7 @@ public:
 
 void GameObjectContactListener::BeginContact(b2Contact* contact) {
 
+
 	//check if fixture A was a ball
 	WorldObject* gameObjectA = static_cast<WorldObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
 	if (gameObjectA)
@@ -58,10 +59,14 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 		gameObjectB->definition->id == "BULLET1")
 	{
 		if (gameObjectA->definition->id == "BULLET1") {
+
 			gameObjectA->removeFromWorld = true;
 			
 		}
 		if (gameObjectB->definition->id == "BULLET1") {
+			//worldObjectPtr = static_cast<WorldObject*>(gameObjectB);
+			//worldObjectPtr->removeFromWorld = true;
+
 			gameObjectB->removeFromWorld = true;
 
 		}
@@ -72,7 +77,7 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 
 		//This position might be "inside" of the wall object
 		//We will do a ray trace from this position towards the play object untl it is no long inside the wall
-		findWallImpactPoint(worldPoint, game->player.get());
+		//findWallImpactPoint(worldPoint, game->player.get());
 
 		//temp color code
 		SDL_Color colorMin = { 1,1,1,255 };

@@ -104,7 +104,7 @@ void ParticleMachine::emit(
 	{
 
 		//Get the particle object from the pre-populated particle pool
-		ParticleObject* particle = game->objectPoolManager.get(poolId);
+		shared_ptr<ParticleObject> particle = game->objectPoolManager.get(poolId);
 
 		//If the returned particle is null, then the pool has run out, so do nothing
 		if (particle != NULL)

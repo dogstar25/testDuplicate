@@ -3,7 +3,7 @@
     {
       "id": "BULLET1_POOL",
       "gameObjectId": "BULLET1",
-      "lifetime": 2.25,
+      "lifetime": 1.25,
       "maxItems": 500
     },
     {

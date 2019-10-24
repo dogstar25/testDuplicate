@@ -139,7 +139,7 @@ public:
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
-	void addGameObject(ParticleObject* gameObject, int);
+	void addGameObject(shared_ptr<ParticleObject> gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 	void testExplosion(SDL_Event*);
@@ -181,8 +181,6 @@ public:
 	//Each layer contains a GameObjectCollection
 	array <GameObjectCollection, MAX_LAYERS> gameCollections;
 	unique_ptr<PlayerObject> player;
-
-
 
 	//Settings Object
 	Settings settings;

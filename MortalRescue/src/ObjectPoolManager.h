@@ -13,10 +13,10 @@ public:
 	ObjectPoolManager();
 	~ObjectPoolManager();
 	void init();
-	void reset(ParticleObject* particle);
+	void reset(shared_ptr<ParticleObject> particle);
 
-	ParticleObject* get(string);
-	map <string, vector<ParticleObject*>> objectPool;
+	shared_ptr<ParticleObject> get(string);
+	map <string, vector<shared_ptr<ParticleObject>>> objectPool;
 
 };
 

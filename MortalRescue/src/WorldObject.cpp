@@ -25,6 +25,15 @@ WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angl
 	this->xPos = (xMapPos * (game->worldGridSize.w / game->config.scaleFactor)) + (definition->xSize / 2);
 	this->yPos = (yMapPos * (game->worldGridSize.h / game->config.scaleFactor)) + (definition->ySize / 2);
 
+	//debug
+	/*
+	if (gameObjectId.substr(0,4) == "WALL")
+	{
+		std::cout << "xPos is " << this->xPos << "\n";
+		std::cout << "yPos is " << this->yPos << "\n";
+	}
+	*/
+
 	//speed
 	this->speed = definition->speed;
 

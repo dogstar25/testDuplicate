@@ -36,7 +36,7 @@ void Weapon::fireOld()
 {
 	//bullet;
 	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
-	ParticleObject* bullet = game->objectPoolManager.get("BULLET1_POOL");
+	shared_ptr<ParticleObject> bullet = game->objectPoolManager.get("BULLET1_POOL");
 	if (bullet != NULL) {
 
 		//Calculate the origin of the bullet

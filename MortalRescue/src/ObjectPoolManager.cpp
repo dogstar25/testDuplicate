@@ -42,7 +42,8 @@ void ObjectPoolManager::init()
 			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
 			particle->physicsBody->SetActive(false);
-			objectPool[poolId].push_back(particle);
+			//objectPool[poolId].push_back(make_shared<ParticleObject>(*particle));
+			objectPool[poolId].push_back(shared_ptr<ParticleObject>(particle));
 		}
 
 	}
@@ -58,6 +59,7 @@ ObjectPoolManager::ObjectPoolManager()
 
 ObjectPoolManager::~ObjectPoolManager()
 {
+	/*
 	for (auto particleMap : this->objectPool)
 	{
 		for (auto particle : particleMap.second)
@@ -65,15 +67,15 @@ ObjectPoolManager::~ObjectPoolManager()
 			delete particle;
 		}
 	}
-
+	*/
 	this-> objectPool.clear();
 	
 	
 }
 
-ParticleObject* ObjectPoolManager::get(string poolId)
+shared_ptr<ParticleObject> ObjectPoolManager::get(string poolId)
 {
-	ParticleObject* availParticle=NULL;
+	shared_ptr<ParticleObject> availParticle;
 	
 	for (auto particle : this->objectPool[poolId])
 	{
@@ -90,7 +92,7 @@ ParticleObject* ObjectPoolManager::get(string poolId)
 
 }
 
-void ObjectPoolManager::reset(ParticleObject* particle)
+void ObjectPoolManager::reset(shared_ptr<ParticleObject> particle)
 {
 
 	b2Vec2 velocityVector = b2Vec2(0, 0);

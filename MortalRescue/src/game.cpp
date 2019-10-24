@@ -94,6 +94,10 @@ bool Game::init()
 	//Create the main player object
 	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
 	this->player = make_unique<PlayerObject>(*player);
+	//this->player = unique_ptr<PlayerObject>(player);
+
+	//PlayerObject* test = static_cast<PlayerObject*>(this->player->physicsBody->GetUserData());
+	//test->speed = 50;
 
 	// Add a weapon that will have bullet origin that is located half way
 	// in the X position and halfway in the Y position from this objects origin
@@ -218,20 +222,18 @@ void Game::update() {
 		}
 
 		//Update particle game objects
-		ParticleObject* particleObject = NULL;
-		ParticleObject* particleObjectRemoved = NULL;
+		shared_ptr<ParticleObject> particleObject = NULL;
 
 		for (int x=0;x<gameObjectCollection.particleObjects.size();x++)
 		{
 
-			//If particle is expired, reset it and remove from teh game world list
-			//The pointer and objectitself will remain in the pool
+			//If particle is expired, reset it and remove from the game world list
+			//The pointer and object itself will remain in the pool
 			
 			particleObject = gameObjectCollection.particleObjects[x];
 
 			if (particleObject->removeFromWorld == true)
 			{
-				particleObjectRemoved = particleObject;
 				game->objectPoolManager.reset(particleObject);
 				std:swap(gameObjectCollection.particleObjects[x], 
 					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
@@ -303,7 +305,6 @@ void Game::render() {
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
-	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
 	this->gameCollections[layer].gameObjects.push_back(make_unique<GameObject>(*gameObject));
 	this->gameObjectCount++;
 
@@ -312,14 +313,12 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameCollections[layer].gameObjects.push_back(make_unique<WorldObject>(*gameObject));
 	this->gameObjectCount++;
 }
 
-void Game::addGameObject(ParticleObject* gameObject, int layer)
+void Game::addGameObject(shared_ptr<ParticleObject> gameObject, int layer)
 {
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	gameObject->time_snapshot = steady_clock::now();
 	this->gameCollections[layer].particleObjects.push_back(gameObject);
 	this->gameObjectCount++;
@@ -327,7 +326,6 @@ void Game::addGameObject(ParticleObject* gameObject, int layer)
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameCollections[layer].gameObjects.push_back(make_unique<TextObject>(*gameObject));
 	this->gameObjectCount++;
 }
