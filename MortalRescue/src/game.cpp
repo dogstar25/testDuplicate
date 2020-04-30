@@ -181,6 +181,12 @@ bool Game::init()
 	compositeObject = GameObjectManager::instance().buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
 
+//	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("CHAINTEST", 3, 3, 0);
+//	this->addGameObject(worldObject, GameOjectLayer::MAIN);
+
+	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("PARTICLE_SMOKE_GLOW", 4, 4, 45);
+	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
+
 	//Create the debug panel if its turned on
 	if (GameConfig::instance().debugPanel() == true)
 	{
@@ -188,6 +194,9 @@ bool Game::init()
 		this->debugPanel = make_unique<DebugPanel>();
 
 	}
+
+
+
 
 	return true;
 }
@@ -302,7 +311,7 @@ void Game::render() {
 
 	//render the player
 	this->player->render();
-	
+
 	//Render all of the game objects in thew world
 	renderCollection(&this->gameCollections);
 
@@ -311,6 +320,13 @@ void Game::render() {
 	{
 		this->physicsWorld->DrawDebugData();
 	}
+
+	/*
+	SDL_Color color = { 0,0,255,255 };
+	b2Vec2 start = { 64,64 };
+	b2Vec2 end = { 67,1000 };
+	TextureManager::instance().drawGlowLine(start, end, color);
+	*/
 
 	//Push all drawn things to the graphics display
 	TextureManager::instance().present();
@@ -452,19 +468,19 @@ void Game::initWorldBounds()
 	}
 	else
 	{
-		width = m_levelManager.levels[this->currentLevel]->width *
-			m_levelManager.levels[this->currentLevel]->tileWidth;
+		width = m_levelManager.levelSize(this->currentLevel).x *
+			m_levelManager.tileSize(this->currentLevel).x;
 
-		height = m_levelManager.levels[this->currentLevel]->height *
-			m_levelManager.levels[this->currentLevel]->tileHeight;
+		height = m_levelManager.levelSize(this->currentLevel).y *
+			m_levelManager.tileSize(this->currentLevel).y;
 	}
 
 	this->worldBounds.x = 0;
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
-	this->worldGridSize.w = m_levelManager.levels[this->currentLevel]->tileWidth;
-	this->worldGridSize.h = m_levelManager.levels[this->currentLevel]->tileHeight;
+	this->worldGridSize.w = m_levelManager.tileSize(this->currentLevel).x;
+	this->worldGridSize.h = m_levelManager.tileSize(this->currentLevel).y;
 
 }
 
