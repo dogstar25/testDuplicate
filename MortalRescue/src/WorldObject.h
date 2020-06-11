@@ -3,6 +3,13 @@
 
 class WeaponObject;
 
+/*
+TODO: box2d collision categories need to be more general. We only have 16 available
+Once the collision is detected, then the collision object
+can have a more precise sub-category that will dictate the collision actions/response
+
+
+*/
 enum worldObjectCategory {
 	GENERIC = 1,
 	PLAYER = 2,
